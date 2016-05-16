@@ -1,0 +1,4 @@
+name = Providence College Customizations
+description = Provides a styled view of objects for raw basic images.
+dependencies[] = islandora
+core = 7.x

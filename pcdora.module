@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Hooks and callbacks for this module.    'access callback' => 'islandora_datastream_access',
+    'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 5),
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function pcdora_menu() {
+  $items = array();
+  $items['islandora/raw/%islandora_object/%dsid'] = array(
+    'title' => 'Raw Image View',
+    'page callback' => 'pcdora_raw_image',
+    'page arguments' => array(2, 3),
+    'access callback' => TRUE,
+    'file' => 'includes/includes.inc',
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function pcdora_theme() {
+  return array(
+    'pcdora_raw' => array(
+      'template' => 'theme/pcdora-raw-image',
+      'variables' => array(
+        'raw' => NULL,
+      ),
+      'file' => 'theme/theme.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function pcdora_preprocess_page(&$variables) {
+  if (!is_null($variables['theme_hook_suggestions'])) {
+    foreach($variables['theme_hook_suggestions'] as $key => &$value) {
+      $value = str_replace(":", "_", $value);
+    }
+  }
+  dsm($variables, "page  vars");
+}
+
+function pcdora_preprocess_islandora_basic_image(&$variables) {
+  $islandora_object = $variables['islandora_object'];
+  $link_url = url("islandora/raw/{$islandora_object->id}/OBJ", array('absolute' => TRUE));
+  if (isset($variables['islandora_full_url'])) {
+    $variables['islandora_content'] = l($variables['islandora_medium_img'], $link_url, array('html' => TRUE));
+  }
+  else {
+    $variables['islandora_content'] = $variables['islandora_medium_img'];
+  }
+}
