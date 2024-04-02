@@ -1,0 +1,7 @@
+{
+    "name": "discoverygarden/pcdora",
+    "description": "Customizations for PC",
+    "type": "drupal-module",
+    "license": "GPL-3.0-only",
+    "require": {}
+}

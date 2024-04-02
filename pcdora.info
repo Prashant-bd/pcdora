@@ -1,4 +1,5 @@
+name: 'pcdora'
 name = Providence College Customizations
-description = Provides a styled view of objects for raw basic images.
-dependencies[] = islandora
-core = 7.x
+description = Provides customizations for the pc i8 installation
+core_version_requirement: ^8 || ^9 || ^10
+package: 'discoverygarden'
